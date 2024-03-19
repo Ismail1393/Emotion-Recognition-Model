@@ -3,24 +3,36 @@ import numpy as np
 from classification import evaluate
 from data_processing import read_data
 import random
+
+from sklearn import svm
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.metrics import confusion_matrix, accuracy_score, precision_score, recall_score
+from sklearn.model_selection import GroupKFold
+
 import matplotlib.pyplot as plot
 
 
 def run_experiment(classifier, data_type, data_directory):
 
-    print("------------------------------------------------------")
+    print("---------------------running experiment start-----------------------")
     print(classifier, data_type)
 
+    print("---------------------reading data start-----------------------")
     # Read and transform the dataset
     X, y, subjects = read_data(data_directory, data_type)
 
+
+    print("---------------------reading data end-----------------------")
     X = np.array(X)
     y = np.array(y)
     subjects = np.array(subjects)
 
-    if data_type == "Original" or "Translated":
+    print("---------------------evaluating data start-----------------------")
+    if data_type == "Original" or  data_type == "Translated":
         evaluate(X, y, classifier, data_type, subjects)
 
+        print("---------------------evaluating data end-----------------------")
     elif data_type == "Rotated":
         X_rotated_x, X_rotated_y, X_rotated_z = X[:, 0], X[:, 1], X[:, 2]
         # for RotatedX
@@ -30,7 +42,7 @@ def run_experiment(classifier, data_type, data_directory):
         # for RotatedZ
         evaluate(X_rotated_z, y, classifier, data_type+"Z", subjects)
 
-    print("------------------------------------------------------")
+    print("----------------------running experiment end----------------------")
 
 
 def plot_sample_points(X, label, color):
