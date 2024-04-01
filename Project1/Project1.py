@@ -33,12 +33,12 @@ def plot_sample_points(points):
     fig = plt.figure() # Create a new figure for plotting.
     ax = fig.add_subplot(111, projection='3d') # Add a 3D subplot to the figure. '111' means 1x1 grid.
     points = points.reshape(83, 3) # Reshape the 'points' array to have 83 rows and 3 columns.
-    ax.scatter(points[:, 0], points[:, 1], points[:, 2], c='brown', marker='o')# Scatter plot the points. 
+    ax.scatter(points[:, 0], points[:, 1], points[:, 2], c='blue', marker='o')# Scatter plot the points. 
     # Set labels for each axis.
     ax.set_xlabel('X Axis')
     ax.set_ylabel('Y Axis')
     ax.set_zlabel('Z Axis')
-    ax.legend(["Originals"]) # Legen for plot Change this to what we are plotting.
+    ax.legend(["Rotated(Z)"]) # Legen for plot Change this to what we are plotting.
     plt.show() # Display the plot.
 
 
@@ -86,7 +86,7 @@ if __name__ == "__main__":
                     # Rotate around the Y-axis and flatten the points.
                     elif input[1] in ['RY', 'ry']:
                         points = np.array(points)
-                        pi = round(2*np.acos(0.0), 3)
+                        pi = round(2*acos(0.0), 3)
                         cos = np.cos(pi)
                         sin = np.sin(pi)
                         rotatedY = np.dot(np.array([[cos, 0, -sin], [0, 1, 0], [sin, 0, cos]]), points.T).T.flatten()
@@ -94,7 +94,7 @@ if __name__ == "__main__":
                     # Rotate around the X-axis and flatten the points.
                     elif input[1] in ['RX', 'rx']:
                         points = np.array(points)
-                        pi = round(2*np.acos(0.0), 3)
+                        pi = round(2*acos(0.0), 3)
                         cos = np.cos(pi)
                         sin = np.sin(pi)
                         rotatedX = np.dot(np.array([[1, 0, 0], [0, cos, sin], [0, -sin, cos]]), points.T).T.flatten()
@@ -102,7 +102,7 @@ if __name__ == "__main__":
                     # Rotate around the Z-axis and flatten the points.
                     elif input[1] in ['RZ', 'rz']:
                         points = np.array(points)
-                        pi = round(2*np.acos(0.0), 3)
+                        pi = round(2*acos(0.0), 3)
                         cos = np.cos(pi)
                         sin = np.sin(pi)
                         rotatedZ = np.dot(np.array([[cos, sin, 0], [-sin, cos, 0], [0, 0, 1]]), points.T).T.flatten()
@@ -115,6 +115,8 @@ if __name__ == "__main__":
                     elif label == "Happy": val = 3
                     elif label == "Sad": val = 4
                     elif label == "Surprise": val = 5
+
+                    plot_sample_points(points)
 
                     # Append the processed data to the respective lists.
                     features.append(points)
